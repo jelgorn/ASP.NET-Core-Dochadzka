@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\ASP_NET_Bakalarka.props" />
-</Project>
