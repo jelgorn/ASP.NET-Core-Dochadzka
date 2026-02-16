@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EvidenciaStudentov.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using EvidenciaStudentov.Infrastructure.Persistence;
+using EvidenciaStudentov.Models;
 
 namespace ASP_NET_Bakalarka.Controllers
 {
@@ -21,7 +22,8 @@ namespace ASP_NET_Bakalarka.Controllers
         // GET: Predmets
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Predmety.ToListAsync());
+            var applicationDbContext = _context.Predmety.Include(p => p.Ucitel);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Predmets/Details/5
@@ -33,6 +35,7 @@ namespace ASP_NET_Bakalarka.Controllers
             }
 
             var predmet = await _context.Predmety
+                .Include(p => p.Ucitel)
                 .FirstOrDefaultAsync(m => m.PredmetId == id);
             if (predmet == null)
             {
@@ -45,6 +48,9 @@ namespace ASP_NET_Bakalarka.Controllers
         // GET: Predmets/Create
         public IActionResult Create()
         {
+            ViewData["UcitelId"] = new SelectList(
+                _context.Pouzivatelia.Where(p => p.Rola == "ucitel"),
+                "PouzivatelId", "Email");
             return View();
         }
 
@@ -53,7 +59,7 @@ namespace ASP_NET_Bakalarka.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PredmetId,Nazov,Popis")] Predmet predmet)
+        public async Task<IActionResult> Create([Bind("PredmetId,Nazov,Popis,UcitelId")] Predmet predmet)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +67,7 @@ namespace ASP_NET_Bakalarka.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UcitelId"] = new SelectList(_context.Pouzivatelia, "PouzivatelId", "Email", predmet.UcitelId);
             return View(predmet);
         }
 
@@ -77,6 +84,7 @@ namespace ASP_NET_Bakalarka.Controllers
             {
                 return NotFound();
             }
+            ViewData["UcitelId"] = new SelectList(_context.Pouzivatelia, "PouzivatelId", "Email", predmet.UcitelId);
             return View(predmet);
         }
 
@@ -85,7 +93,7 @@ namespace ASP_NET_Bakalarka.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PredmetId,Nazov,Popis")] Predmet predmet)
+        public async Task<IActionResult> Edit(int id, [Bind("PredmetId,Nazov,Popis,UcitelId")] Predmet predmet)
         {
             if (id != predmet.PredmetId)
             {
@@ -112,6 +120,7 @@ namespace ASP_NET_Bakalarka.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UcitelId"] = new SelectList(_context.Pouzivatelia, "PouzivatelId", "Email", predmet.UcitelId);
             return View(predmet);
         }
 
@@ -124,6 +133,7 @@ namespace ASP_NET_Bakalarka.Controllers
             }
 
             var predmet = await _context.Predmety
+                .Include(p => p.Ucitel)
                 .FirstOrDefaultAsync(m => m.PredmetId == id);
             if (predmet == null)
             {
@@ -154,3 +164,5 @@ namespace ASP_NET_Bakalarka.Controllers
         }
     }
 }
+
+

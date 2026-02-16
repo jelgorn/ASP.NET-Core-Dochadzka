@@ -1,4 +1,4 @@
-﻿@model Pouzivatel
+﻿@model EvidenciaStudentov.Models.Pouzivatel
 
 @{
     ViewData["Title"] = "Details";
@@ -35,16 +35,16 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HesloHash)
+            @Html.DisplayNameFor(model => model.Heslo)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HesloHash)
+            @Html.DisplayFor(model => model.Heslo)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Rola)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rola.Nazov)
+            @Html.DisplayFor(model => model.Rola)
         </dd>
     </dl>
 </div>

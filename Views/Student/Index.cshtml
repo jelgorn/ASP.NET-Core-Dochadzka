@@ -1,0 +1,265 @@
+﻿@using EvidenciaStudentov.ViewModels
+@model StudentProfilViewModel
+
+@{
+    ViewBag.Title = "Profil študenta";
+
+    // Výpočet priemerov známok
+    double overallAverage = 0;
+    double? bestAverage = null;
+    double? worstAverage = null;
+
+    // Zoskupenie známok (typu (string Predmet, double Priemer)) alebo prázdny zoznam
+    var groupedZnamky = Model.Znamky.Any()
+        ? Model.Znamky
+            .GroupBy(z => z.Predmet)
+            .Select(g => (Predmet: g.Key, Priemer: g.Average(x => x.Hodnota)))
+            .ToList()
+        : new List<(string Predmet, double Priemer)>();
+
+    if (Model.Znamky.Any())
+    {
+        overallAverage = Model.Znamky.Average(z => z.Hodnota);
+        bestAverage = groupedZnamky.Min(x => x.Priemer);
+        worstAverage = groupedZnamky.Max(x => x.Priemer);
+    }
+
+    var bestSubject = groupedZnamky.OrderBy(g => g.Priemer).FirstOrDefault();
+    var worstSubject = groupedZnamky.OrderByDescending(g => g.Priemer).FirstOrDefault();
+
+    // Výpočet dochádzky
+    var totalAttendance = Model.PocetPritomnosti + Model.PocetNepritomnosti;
+    var attendancePercentage = totalAttendance > 0
+        ? Math.Round((double)Model.PocetPritomnosti / totalAttendance * 100, 2)
+        : 0;
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+
+<div class="container mt-5">
+    <div class="row" >
+        <!-- Sidebar: Profil a štatistiky -->
+        <div class="col-12 col-lg-3">
+            <!-- Profilová karta -->
+            <div class="card mb-4 shadow-sm border-0 rounded-4 ">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-2">👨‍🎓 @Model.Meno @Model.Priezvisko</h5>
+                    <p class="card-text mb-1">@Model.Email</p>
+                    <p class="card-text mb-3">@Model.DatumNarodenia.ToString("dd.MM.yyyy")</p>
+                    <a href="@Url.Action("ChangePassword", "Account")" class="custom-toggle-btn rounded-pill px-4 py-2">
+                        Zmeniť heslo
+                    </a>
+                </div>
+            </div>
+            <!-- Štatistické karty usporiadané do 2×2 mriežky -->
+            <div class="row g-3">
+                <!-- Karta 1: Najlepší priemer -->
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
+                            <h6 class="fw-bold mb-2">
+                                @(bestSubject.Predmet != null ? bestSubject.Predmet : "Neznámy")
+                            </h6>
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mb-2"
+                                 style="width: 50px; height: 50px; font-size: 1.5rem;">
+                                🏆
+                            </div>
+                            <h5 class="fw-bold mb-0">
+                                @bestSubject.Priemer.ToString("0.00")
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- Karta 2: Najhorší priemer -->
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
+                            <h6 class="fw-bold mb-2">
+                                @(worstSubject.Predmet != null ? worstSubject.Predmet : "Neznámy")
+                            </h6>
+                            <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center mb-2"
+                                 style="width: 50px; height: 50px; font-size: 1.5rem;">
+                                🔥
+                            </div>
+                            <h5 class="fw-bold mb-0">
+                                @worstSubject.Priemer.ToString("0.00")
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- Karta 3: Celkový priemer -->
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
+                            <div class="mb-2" style="font-size: 1.8rem;">📈</div>
+                            <p class="fs-6 mb-1">Priemer</p>
+                            <h5 class="fw-bold mb-0">@overallAverage.ToString("0.00")</h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- Karta 4: Dochádzka -->
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
+                            <div class="mb-2" style="font-size: 1.8rem;">⏰</div>
+                            <p class="fs-6 mb-1">Dochádzka</p>
+                            <h5 class="fw-bold mb-0">@attendancePercentage %</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+
+            <!-- Pravý stĺpec: upozornenia na známky -->
+            <div class="col-md-8">
+                @* Tu vlož moderný dizajn pre upozornenia *@
+                @if (Model.Znamky != null && Model.Znamky.Any())
+                {
+                    <style>
+                        /* Moderný dizajn pre upozornenia */
+                        #notifikacie-container .card {
+                            border: none;
+                            border-radius: 16px;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                            transition: transform 0.3s ease, opacity 0.3s ease;
+                            background: #fff;
+                            overflow: hidden;
+                        }
+
+                            #notifikacie-container .card:hover {
+                                transform: translateY(-3px);
+                                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                            }
+
+                        #notifikacie-container .card-body {
+                            padding: 1.5rem;
+                        }
+
+                        #notifikacie-container p {
+                            margin-bottom: 0.5rem;
+                        }
+                        /* Štýl pre zvýraznenie známky */
+                        .grade-badge {
+                            font-size: 1.5rem;
+                            font-weight: 700;
+                            padding: 0.5rem 1rem;
+                            border-radius: 30px;
+                            background: linear-gradient(45deg, #00b4db, #0083b0);
+                            color: #fff;
+                        }
+
+                        .notification-header {
+                            font-size: 1.1rem;
+                            font-weight: 600;
+                            margin-bottom: 0.25rem;
+                        }
+
+                        .notification-subtext {
+                            font-size: 0.9rem;
+                            color: #555;
+                        }
+
+                        button#toggleZnamky {
+                            background-color: #007bff;
+                            border: none;
+                            padding: 0.5rem 1rem;
+                            font-weight: 600;
+                            border-radius: 8px;
+                            transition: background-color 0.3s ease;
+                        }
+
+                            button#toggleZnamky:hover {
+                                background-color: #0056b3;
+                            }
+                    </style>
+
+                    <div id="notifikacie-container" class="d-flex flex-column gap-3">
+                        @{
+                            int counter = 0;
+                        }
+                        @foreach (var znamka in Model.Znamky)
+                        {
+                            // Ak je upozornenie mimo prvých 4, pridáme triedu d-none
+                            var cardClasses = "card";
+                            if (counter >= 4)
+                            {
+                                cardClasses += " d-none";
+                            }
+                            <div class="@cardClasses">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                        <div class="notification-header">
+                                            📚 <span class="text-dark">@znamka.Predmet</span>
+                                        </div>
+                                            <div class="notification-subtext">
+                                                Pridané dňa: <span>@znamka.Datum.ToString("dd.MM.yyyy")</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto text-end">
+                                            <div class="grade-badge">
+                                                @znamka.Hodnota
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            counter++;
+                        }
+                    </div>
+
+                    @if (Model.Znamky.Count > 3)
+                    {
+                    <div class="custom-toggle-btn text-center mb-5"
+                            id="toggleZnamky" type="button">
+                                Zobraziť viac
+                            
+                        </div>
+                    }
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var toggleBtn = document.getElementById("toggleZnamky");
+                            var notifications = document.querySelectorAll("#notifikacie-container .card");
+                            if (toggleBtn) {
+                                toggleBtn.addEventListener("click", function () {
+                                    var areHidden = Array.from(notifications).slice(4).some(function (el) {
+                                        return el.classList.contains("d-none");
+                                    });
+                                    if (areHidden) {
+                                        notifications.forEach(function (el, index) {
+                                            if (index >= 4) {
+                                                el.classList.remove("d-none");
+                                            }
+                                        });
+                                        toggleBtn.textContent = "Zobraziť menej";
+                                    } else {
+                                        notifications.forEach(function (el, index) {
+                                            if (index >= 4) {
+                                                el.classList.add("d-none");
+                                            }
+                                        });
+                                        toggleBtn.textContent = "Zobraziť viac";
+                                    }
+                                });
+                            }
+                        });
+                    </script>
+                }
+                else
+                {
+                    <div class="alert alert-warning text-center" role="alert">
+                        Momentálne nemáte žiadne nové notifikácie.
+                    </div>
+                }
+            </div>
+    </div>
+</div>
+

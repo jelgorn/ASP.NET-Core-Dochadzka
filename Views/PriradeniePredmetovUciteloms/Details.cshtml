@@ -1,0 +1,24 @@
+﻿@model EvidenciaStudentov.Models.PriradeniePredmetovUcitelom
+
+@{
+    ViewData["Title"] = "Detail priradenia";
+}
+
+<div class="container py-5">
+    <h1 class="text-center fw-bold mb-4">📋 Detaily priradenia učiteľa</h1>
+
+    <div class="card shadow p-4 rounded bg-white">
+        <dl class="row">
+            <dt class="col-sm-4">Učiteľ</dt>
+            <dd class="col-sm-8">@(Model.Pouzivatel?.Email ?? "-")</dd>
+
+            <dt class="col-sm-4">Predmet</dt>
+            <dd class="col-sm-8">@(Model.Predmet?.Nazov ?? "-")</dd>
+        </dl>
+    </div>
+
+    <div class="mt-4 d-flex justify-content-between">
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">⬅️ Späť</a>
+        <a asp-action="Edit" asp-route-id="@Model?.PriradeniePredUcitelId" class="btn btn-primary rounded-pill">✏️ Upraviť</a>
+    </div>
+</div>

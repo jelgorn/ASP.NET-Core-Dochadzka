@@ -1,55 +1,72 @@
-﻿@model Pouzivatel
+﻿@model EvidenciaStudentov.Models.Pouzivatel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewBag.Title = "Pridať používateľa";
 }
 
-<h1>Create</h1>
+<div class="container py-5">
+    <h1 class="text-center fw-bold mb-4">👤 Nový používateľ</h1>
 
-<h4>Pouzivatel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div class="form-group">
-                <label asp-for="Meno" class="control-label"></label>
-                <input asp-for="Meno" class="form-control" />
-                <span asp-validation-for="Meno" class="text-danger"></span>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm border-0">
+                
+ 
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label asp-for="Meno" class="form-label fw-bold">Meno</label>
+                                <input asp-for="Meno" class="form-control" placeholder="Zadajte meno">
+                                <span asp-validation-for="Meno" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Priezvisko" class="form-label fw-bold">Priezvisko</label>
+                                <input asp-for="Priezvisko" class="form-control" placeholder="Zadajte priezvisko">
+                                <span asp-validation-for="Priezvisko" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="form-label fw-bold">Email</label>
+                                <input asp-for="Email" class="form-control" placeholder="napr. meno@domena.sk">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Heslo" class="form-label fw-bold">Heslo</label>
+                                <input asp-for="Heslo" class="form-control" placeholder="Zadajte heslo" type="password">
+                                <span asp-validation-for="Heslo" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="DatumNarodenia" class="form-label fw-bold">Dátum narodenia</label>
+                                <input asp-for="DatumNarodenia" class="form-control" type="date" />
+                                <span asp-validation-for="DatumNarodenia" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Rola" class="form-label fw-bold">Rola</label>
+                                <select asp-for="Rola" class="form-select">
+                                    <option value="">-- Vyberte rolu --</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="ucitel">Učiteľ</option>
+                                    <option value="ziak">Žiak</option>
+                                </select>
+                                <span asp-validation-for="Rola" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="text-end mt-4">
+                            <a asp-action="Index" class="custom-toggle-btn rounded-pill px-4 py-2">Späť</a>
+                            <button type="submit" class="custom-toggle-btn rounded-pill px-4 py-2">Vytvoriť používateľa</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Priezvisko" class="control-label"></label>
-                <input asp-for="Priezvisko" class="form-control" />
-                <span asp-validation-for="Priezvisko" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DatumNarodenia" class="control-label"></label>
-                <input asp-for="DatumNarodenia" class="form-control" />
-                <span asp-validation-for="DatumNarodenia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HesloHash" class="control-label"></label>
-                <input asp-for="HesloHash" class="form-control" />
-                <span asp-validation-for="HesloHash" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RolaId" class="control-label"></label>
-                <select asp-for="RolaId" class="form-control" asp-items="ViewBag.RolaId"></select>
-                <span asp-validation-for="RolaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
@@ -57,5 +74,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
-

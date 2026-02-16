@@ -1,38 +1,45 @@
-﻿@model Predmet
+﻿@model EvidenciaStudentov.Models.Predmet
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Pridať predmet";
 }
 
-<h1>Create</h1>
+<div class="container py-5">
+    <h1 class="text-center fw-bold mb-4">📘 Pridať nový predmet</h1>
 
-<h4>Predmet</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nazov" class="control-label"></label>
-                <input asp-for="Nazov" class="form-control" />
-                <span asp-validation-for="Nazov" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Popis" class="control-label"></label>
-                <input asp-for="Popis" class="form-control" />
-                <span asp-validation-for="Popis" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create" class="shadow p-4 rounded bg-white">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Nazov" class="form-label">Názov</label>
+                    <input asp-for="Nazov" class="form-control rounded-pill" />
+                    <span asp-validation-for="Nazov" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Popis" class="form-label">Popis</label>
+                    <input asp-for="Popis" class="form-control rounded-pill" />
+                    <span asp-validation-for="Popis" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="UcitelId" class="form-label">Učiteľ</label>
+                    <select asp-for="UcitelId" class="form-select rounded-pill" asp-items="ViewBag.UcitelId"></select>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="custom-toggle-btn rounded-pill px-4 py-2">Späť</a>
+                    <button type="submit" class="custom-toggle-btn rounded-pill px-4 py-2">Vytvoriť</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -1,0 +1,27 @@
+﻿@model EvidenciaStudentov.Models.PriradeniePredmetovUcitelom
+
+@{
+    ViewData["Title"] = "Odstrániť priradenie";
+}
+
+<div class="container py-5">
+    <h1 class="text-center text-danger fw-bold mb-4">🗑️ Odstrániť priradenie učiteľa</h1>
+
+    <div class="card shadow p-4 rounded bg-white">
+        <h5>Ste si istý, že chcete odstrániť toto priradenie?</h5>
+
+        <dl class="row mt-4">
+            <dt class="col-sm-4">Učiteľ</dt>
+            <dd class="col-sm-8">@(Model.Pouzivatel?.Email ?? "-")</dd>
+
+            <dt class="col-sm-4">Predmet</dt>
+            <dd class="col-sm-8">@(Model.Predmet?.Nazov ?? "-")</dd>
+        </dl>
+
+        <form asp-action="Delete" class="mt-4 d-flex justify-content-between">
+            <input type="hidden" asp-for="PriradeniePredUcitelId" />
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">⬅️ Späť</a>
+            <button type="submit" class="btn btn-danger rounded-pill px-4">🗑️ Odstrániť</button>
+        </form>
+    </div>
+</div>

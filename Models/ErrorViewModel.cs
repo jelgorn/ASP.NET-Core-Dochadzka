@@ -1,4 +1,4 @@
-namespace ASP_NET_Bakalarka.Models
+﻿namespace ASP_NET_Bakalarka.Models
 {
     public class ErrorViewModel
     {
@@ -7,3 +7,4 @@ namespace ASP_NET_Bakalarka.Models
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }
+

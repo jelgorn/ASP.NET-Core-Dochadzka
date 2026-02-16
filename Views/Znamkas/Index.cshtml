@@ -1,0 +1,53 @@
+﻿@model IEnumerable<EvidenciaStudentov.Models.Znamka>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Hodnota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Datum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Predmet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pouzivatel)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hodnota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datum)
+            </td>
+            <td>
+                @(item.Predmet?.Nazov ?? "-")
+            </td>
+            <td>
+                @(item.Pouzivatel?.Email ?? "-")
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ZnamkaId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ZnamkaId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ZnamkaId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

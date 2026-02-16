@@ -1,0 +1,45 @@
+﻿@model EvidenciaStudentov.Models.PriradeniePredmetovZiakom
+
+
+@{
+    ViewBag.Title = "PriradeniePredmetovZiakom";
+}
+<div class="container py-5">
+    <h1 class="text-center fw-bold mb-4">👨‍🎓📚  Priradiť predmet žiakovi</h1>
+
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form asp-action="Create">
+                            <div class="mb-3">
+                                <label asp-for="PouzivatelId" class="control-label"></label>
+                                <select asp-for="PouzivatelId" class="form-control" asp-items="ViewBag.PouzivatelId"></select>
+                                
+                                </select>
+                                <span asp-validation-for="PouzivatelId" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="PredmetId" class="control-label"></label>
+                                <select asp-for="PredmetId" class="form-control" asp-items="ViewBag.PredmetId"></select>
+                                
+                                </select>
+                                <span asp-validation-for="PredmetId" class="text-danger"></span>
+                            </div>
+                            <div class="text-end">
+                                <a asp-action="Index" class="custom-toggle-btn rounded-pill px-4 py-2">Späť</a>
+                                <button type="submit" class="custom-toggle-btn rounded-pill px-4 py-2">Uložiť</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

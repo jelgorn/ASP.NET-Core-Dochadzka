@@ -1,0 +1,270 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0; /* Odstráni okraje stránky */
+  padding: 0; /* Odstráni padding stránky */
+  overflow-x: hidden; /* Zabránite horizontálnemu posúvaniu */
+  
+}
+
+.navbar-logo {
+  height: 50px;
+  width: auto;
+  margin-right: 10px;
+}
+
+/* Navbar podľa štandardov */
+.navbar {
+  background: linear-gradient(90deg, #17A2B8 0%, #138496 100%);
+  padding: 0.75rem 1.5rem; /* top-bottom: 12px */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+}
+
+/* Brand text vedľa loga */
+.navbar .navbar-brand {
+  font-size: 1.125rem; /* ~18px */
+  font-weight: 600;
+  color: #FFFFF3;
+}
+
+/* Odkazy v menu */
+.navbar .navbar-nav .nav-link {
+  position: relative;
+  color: #FFFFF3;
+  font-weight: 500;
+  margin-right: 18px;
+  font-size: 0.95rem; /* ~15px */
+  text-decoration: none;
+  padding: 4px 6px;
+  transition: all 0.3s ease;
+}
+
+/* Hover spodná čiarka */
+.navbar .navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -3px;
+  left: 0;
+  background-color: #F79824;
+  transition: width 0.3s ease-in-out;
+}
+
+.navbar .navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+  color: #F79824;
+}
+
+
+.hero-section {
+  position: relative !important;
+  width: 100% !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.hero-section img {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+}
+
+.hero-section-logo {
+  height: 80px;
+  width: auto;
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #FFFFF3; /* Svetlá farba textu */
+  z-index: 1;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Jemný tieň pre text */
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content .btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  background-color: #F79824; /* Oranžová farba pre tlačidlo */
+  color: #FFFFF3;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.hero-content .btn:hover {
+  background-color: #d7791a; /* Tmavšia oranžová pri hover */
+}
+
+
+.btn-login,
+.btn-logout {
+  background-color: white;
+  color: #1eb2c2;
+  border: 2px solid #1eb2c2;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover,
+.btn-logout:hover {
+  background-color: #1eb2c2;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-login:focus,
+.btn-logout:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(30, 178, 194, 0.3);
+}
+
+.footer {
+  background-color: #138496;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  padding: 20px 40px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+
+.footer a {
+  color: #F79824;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #ffd699;
+}
+
+.notification-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+/* Prispôsobenie textu a okrajov */
+.notification-card h5 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+.notification-card p {
+  margin-bottom: 0;
+}
+
+
+
+
+
+.custom-toggle-btn {
+  background-color: #1eb2c2;
+  color: white;
+  border: 2px solid white;
+  border-radius: 30px; /* Veľké zaoblenie */
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-toggle-btn:hover {
+  background-color: white;
+  color: #1eb2c2;
+  border: 2px solid #1eb2c2; /* Pridá modrý rám */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.custom-toggle-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(30, 178, 194, 0.3);
+}
+
+
+
+
+
+.grade-card {
+  background: linear-gradient(90deg, #17A2B8, #138496);
+  padding: 2px;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.grade-card:hover {
+  transform: scale(1.02);
+}
+
+.grade-card-content {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.grade-card-subject {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
+  margin: 0;
+}
+
+.grade-card-date {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+.grade-card-grade {
+  background: #138496;
+  color: #fff;
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+
+
+
+
+
+

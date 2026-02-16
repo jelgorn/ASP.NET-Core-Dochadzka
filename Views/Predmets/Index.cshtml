@@ -1,41 +1,37 @@
-﻿@model IEnumerable<Predmet>
+﻿@model IEnumerable<EvidenciaStudentov.Models.Predmet>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Prehľad predmetov";
 }
 
-<h1>Index</h1>
+<div class="container py-5 px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold">📚 Prehľad predmetov</h1>
+        <a asp-action="Create" class="custom-toggle-btn rounded-pill px-4">Pridať nový predmet</a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nazov)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Popis)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nazov)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Popis)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PredmetId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PredmetId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PredmetId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <h5 class="fw-bold text-dark">@item.Nazov</h5>
+                            <p class="text-muted mb-2">@item.Popis</p>
+                            <p class="mb-3">
+                                <span class="fw-semibold">Učiteľ:</span>
+                                @item.Ucitel?.Meno @item.Ucitel?.Priezvisko (@item.Ucitel?.Email)
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Edit" asp-route-id="@item.PredmetId" class="btn btn-outline-primary btn-sm rounded-pill">✏️ Upraviť</a>
+                            <a asp-action="Details" asp-route-id="@item.PredmetId" class="btn btn-outline-secondary btn-sm rounded-pill">🔍 Detaily</a>
+                            <a asp-action="Delete" asp-route-id="@item.PredmetId" class="btn btn-outline-danger btn-sm rounded-pill">🗑️ Odstrániť</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

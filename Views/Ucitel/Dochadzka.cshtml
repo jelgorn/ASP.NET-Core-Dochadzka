@@ -1,0 +1,42 @@
+﻿@model IEnumerable<EvidenciaStudentov.ViewModels.DochadzkaViewModel>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Moja Dochádzka 📅</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Predmet</th>
+                <th>Dátum</th>
+                <th>Stav</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model != null && Model.Any())
+            {
+                foreach (var zaznam in Model)
+                {
+                    <tr>
+                        <td>@zaznam.Predmet</td>
+                        <td>@zaznam.Datum.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            @if(zaznam.JePritomny)
+                            {
+                                <span class="text-success">Prítomný ✅</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">Neprítomný ❌</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center">Žiadne záznamy dochádzky</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

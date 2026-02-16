@@ -1,0 +1,371 @@
+﻿@model EvidenciaStudentov.ViewModels.UcitelViewModel
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold display-5 text-dark">📚 Zadávanie známok a dochádzky</h1>
+        <p class="text-muted fs-5">Zadajte známky alebo dochádzku jednoducho cez otočné karty</p>
+    </div>
+
+    <!-- Tabuľka predmetov -->
+    <div class="d-flex overflow-auto mb-4 pb-2" style="max-width: 100%;">
+        @foreach (var predmet in Model.Predmety)
+        {
+            <button class="btn btn-outline-primary mx-2 subject-tab"
+                    data-predmet="@predmet.PredmetId"
+                    style="white-space: nowrap;">
+                @predmet.Nazov
+            </button>
+        }
+    </div>
+
+    <!-- Hlavná flip karta -->
+    <div class="flip-card-container" style="height: 70vh;">
+        @foreach (var predmet in Model.Predmety)
+        {
+            <div class="flip-card-content" id="predmet-@predmet.PredmetId" style="display: none;">
+                <div class="flip-card">
+                    <!-- PREDNÁ STRANA: známky -->
+                    <div class="flip-card-front bg-white rounded shadow-sm p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="text-primary fw-semibold mb-0">📚 @predmet.Nazov - Známky</h3>
+                            <button type="button" class="custom-toggle-btn flip-action-btn">
+                                🕗 Prepnúť na dochádzku
+                            </button>
+                        </div>
+
+                        <form asp-action="HromadnePridajZnamky" method="post" class="h-100 d-flex flex-column">
+                            <input type="hidden" name="predmetId" value="@predmet.PredmetId" />
+
+                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 flex-grow-0 overflow-auto">
+                                @for (int i = 0; i < predmet.Ziaci.Count; i++)
+                                {
+                                    var ziak = predmet.Ziaci[i];
+                                    <div class="col">
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <div class="avatar-placeholder rounded-circle me-3">
+                                                    👨🏻‍🎓
+                                                </div>
+                                                <div>
+                                                    <input type="hidden" name="znamky[@i].ZiakId" value="@ziak.ZiakId" />
+                                                    <h5 class="card-title fw-semibold mb-0">@ziak.Meno</h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-muted">Priemer:</span>
+                                                    <span class="fs-5 fw-bold text-dark">@ziak.Priemer.ToString("F2")</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="input-group">
+                                                <span class="input-group-text">Známka</span>
+                                                <input type="number"
+                                                       name="znamky[@i].Hodnota"
+                                                       class="form-control"
+                                                       min="1"
+                                                       max="5"
+                                                       placeholder="1-5"
+                                                       style="appearance: textfield;">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-graduation-cap"></i>
+                                                </span>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="mt-4 pt-3 border-top d-flex justify-content-end">
+                                <button type="submit" class="custom-save-btn">
+                                    <i class="fas fa-save me-2"></i>Uložiť všetky známky
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- ZADNÁ STRANA: dochádzka -->
+                    <div class="flip-card-back bg-white rounded shadow-sm p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="text-primary fw-semibold mb-0">📅 @predmet.Nazov - Dochádzka</h3>
+                            <button type="button" class="custom-toggle-btn flip-action-btn">
+                                📝 Prepnúť na známky
+                            </button>
+                        </div>
+
+                        <form asp-action="UlozDochadzku" method="post" class="h-100 d-flex flex-column">
+                            <input type="hidden" name="PredmetId" value="@predmet.PredmetId" />
+
+                            <div class="mb-3">
+                                <label class="form-label">Dátum:</label>
+                                <input type="date" class="form-control" name="Datum" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            </div>
+
+                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 flex-grow-0 overflow-auto">
+                                @for (int i = 0; i < predmet.Ziaci.Count; i++)
+                                {
+                                    var ziak = predmet.Ziaci[i];
+                                    <div class="col">
+                                        <div class="card border-0 shadow-sm h-100">
+                                            <div class="card-body d-flex flex-column">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div class="avatar-placeholder rounded-circle me-3">
+                                                        👨🏻‍🎓
+                                                    </div>
+                                                    <div>
+                                                        <h5 class="card-title fw-semibold mb-0">@ziak.Meno</h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-auto">
+                                                    <input type="hidden" name="Studenti[@i].JePritomny" value="true" />
+                                                    <button type="button" class="btn-pill btn-present attendance-toggle">
+                                                        <i class="fas fa-user-check me-1"></i>Prítomný
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="mt-4 pt-3 border-top d-flex justify-content-end">
+                                <button type="submit" class="custom-save-btn">
+                                    <i class="fas fa-save me-2"></i>Uložiť dochádzku
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    /* Hlavné štýly */
+    .flip-card-container {
+        position: relative;
+        perspective: 1000px;
+    }
+
+    .flip-card-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transition: opacity 0.3s ease;
+    }
+
+    .flip-card {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s ease;
+        transform-style: preserve-3d;
+    }
+
+        .flip-card.flipped {
+            transform: rotateX(180deg);
+        }
+
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+
+    .flip-card-back {
+        transform: rotateX(180deg);
+    }
+
+    /* Vlastné štýly */
+    .avatar-placeholder {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        background-color: #1eb2c2;
+        color: white;
+    }
+
+    .card {
+        transition: all 0.2s ease;
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+        }
+
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+        padding: 0.35em 0.65em;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25);
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .subject-tab.active {
+        background-color: #0d6efd;
+        color: white;
+        box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+    }
+
+    /* Štýly pre tlačidlá */
+    .custom-toggle-btn {
+        background-color: #1eb2c2;
+        color: white;
+        border: 2px solid white;
+        border-radius: 30px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+        .custom-toggle-btn:hover {
+            background-color: white;
+            color: #1eb2c2;
+            border: 2px solid #1eb2c2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-toggle-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.25rem rgba(30, 178, 194, 0.3);
+        }
+
+    .custom-save-btn {
+        background-color: #1eb2c2;
+        color: white;
+        border: 2px solid #1eb2c2;
+        border-radius: 30px;
+        padding: 8px 20px;
+        font-size: 1rem;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .custom-save-btn:hover {
+            background-color: white;
+            color: #1eb2c2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-save-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.25rem rgba(30, 178, 194, 0.3);
+        }
+
+    /* Štýly pre pill tlačidlá dochádzky */
+    .btn-pill {
+        border-radius: 50rem;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border-width: 2px;
+        width: 100%;
+    }
+
+    .btn-present {
+        background-color: #e8f5e9;
+        border-color: #2e7d32;
+        color: #2e7d32;
+    }
+
+    .btn-absent {
+        background-color: #ffebee;
+        border-color: #c62828;
+        color: #c62828;
+    }
+
+    .btn-present:hover, .btn-present.active {
+        background-color: #2e7d32;
+        color: white;
+    }
+
+    .btn-absent:hover, .btn-absent.active {
+        background-color: #c62828;
+        color: white;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Prepínanie predmetov
+        const subjectTabs = document.querySelectorAll('.subject-tab');
+        const flipContents = document.querySelectorAll('.flip-card-content');
+
+        subjectTabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                const predmetId = this.getAttribute('data-predmet');
+
+                // Skry všetky obsahy
+                flipContents.forEach(content => {
+                    content.style.display = 'none';
+                });
+
+                // Zobraz aktuálny obsah
+                document.getElementById(`predmet-${predmetId}`).style.display = 'block';
+
+                // Aktívny tab
+                subjectTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+
+                // Reset flip stavu
+                const flipCard = document.querySelector(`#predmet-${predmetId} .flip-card`);
+                flipCard.classList.remove('flipped');
+            });
+        });
+
+        // Aktivuj prvý predmet
+        if (subjectTabs.length > 0) {
+            subjectTabs[0].click();
+        }
+
+        // Flip efekt
+        document.querySelectorAll('.flip-action-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const flipCard = this.closest('.flip-card');
+                flipCard.classList.toggle('flipped');
+            });
+        });
+
+        // Tlačidlá dochádzky
+        document.querySelectorAll('.attendance-toggle').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const hiddenInput = this.previousElementSibling;
+                const isPresent = hiddenInput.value === "true";
+
+                hiddenInput.value = !isPresent;
+                this.classList.toggle('btn-present');
+                this.classList.toggle('btn-absent');
+                this.innerHTML = isPresent
+                    ? '<i class="fas fa-user-times me-1"></i>Neprítomný'
+                    : '<i class="fas fa-user-check me-1"></i>Prítomný';
+            });
+        });
+    });
+</script>

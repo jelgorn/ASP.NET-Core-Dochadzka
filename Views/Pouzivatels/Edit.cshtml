@@ -1,59 +1,54 @@
-﻿@model Pouzivatel
+﻿@model EvidenciaStudentov.Models.Pouzivatel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Upraviť používateľa";
 }
 
-<h1>Edit</h1>
+<div class="container py-5">
+    <h1 class="text-center fw-bold mb-4">✏️ Upraviť používateľa</h1>
 
-<h4>Pouzivatel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PouzivatelId" />
-            <div class="form-group">
-                <label asp-for="Meno" class="control-label"></label>
-                <input asp-for="Meno" class="form-control" />
-                <span asp-validation-for="Meno" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Priezvisko" class="control-label"></label>
-                <input asp-for="Priezvisko" class="form-control" />
-                <span asp-validation-for="Priezvisko" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DatumNarodenia" class="control-label"></label>
-                <input asp-for="DatumNarodenia" class="form-control" />
-                <span asp-validation-for="DatumNarodenia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HesloHash" class="control-label"></label>
-                <input asp-for="HesloHash" class="form-control" />
-                <span asp-validation-for="HesloHash" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RolaId" class="control-label"></label>
-                <select asp-for="RolaId" class="form-control" asp-items="ViewBag.RolaId"></select>
-                <span asp-validation-for="RolaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Edit" class="shadow p-4 rounded bg-white">
+                <input type="hidden" asp-for="PouzivatelId" />
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                @* Polia *@
+                <div class="mb-3">
+                    <label asp-for="Meno" class="form-label">Meno</label>
+                    <input asp-for="Meno" class="form-control rounded-pill" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Priezvisko" class="form-label">Priezvisko</label>
+                    <input asp-for="Priezvisko" class="form-control rounded-pill" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DatumNarodenia" class="form-label">Dátum narodenia</label>
+                    <input asp-for="DatumNarodenia" class="form-control rounded-pill" type="date" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control rounded-pill" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Heslo" class="form-label">Heslo</label>
+                    <input asp-for="Heslo" class="form-control rounded-pill" type="password" />
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Rola" class="form-label">Rola</label>
+                    <input asp-for="Rola" class="form-control rounded-pill" />
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="custom-toggle-btn rounded-pill px-4 py-2">Späť</a>
+                    <button type="submit" class="custom-toggle-btn rounded-pill px-4 py-2">Uložiť</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

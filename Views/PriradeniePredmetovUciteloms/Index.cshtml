@@ -1,0 +1,40 @@
+﻿@model IEnumerable<EvidenciaStudentov.Models.PriradeniePredmetovUcitelom>
+
+@{
+    ViewData["Title"] = "Priradené predmety učiteľom";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold">👨‍🏫📚 Priradiť predmety učiteľom</h1>
+        <a asp-action="Create" class="custom-toggle-btn rounded-pill px-4">
+           Pridať priradenie
+        </a>
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm h-100 border-0 rounded-4">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            👨‍🎓 <strong>@(item.Pouzivatel is null ? "-" : $"{item.Pouzivatel.Meno} {item.Pouzivatel.Priezvisko}")</strong>
+                        </h5>
+                        <h5 class="card-title">
+                            <strong>📧 @(item.Pouzivatel?.Email ?? "-")</strong>
+                        </h5>
+                        <p class="card-text text-muted">
+                            📘 Predmet: <strong>@(item.Predmet?.Nazov ?? "-")</strong>
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
+                        <a asp-action="Edit" asp-route-id="@item.PriradeniePredUcitelId" class="btn btn-outline-primary btn-sm rounded-pill">✏️ Upraviť</a>
+                        <a asp-action="Details" asp-route-id="@item.PriradeniePredUcitelId" class="btn btn-outline-secondary btn-sm rounded-pill">🔍 Detaily</a>
+                        <a asp-action="Delete" asp-route-id="@item.PriradeniePredUcitelId" class="btn btn-outline-danger btn-sm rounded-pill">🗑️ Odstrániť</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

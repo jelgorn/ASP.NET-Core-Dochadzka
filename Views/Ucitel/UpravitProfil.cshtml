@@ -1,0 +1,40 @@
+﻿@model EvidenciaStudentov.ViewModels.UcitelProfilViewModel.UpravitProfilViewModel
+
+
+<div class="container py-5">
+    <h2 class="fw-bold text-center mb-4">🛠️ Upraviť profil</h2>
+
+    <form asp-action="UpravitProfil" method="post" class="col-md-6 offset-md-3">
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <hr />
+
+        <div class="mb-3">
+            <label class="form-label">Aktuálne heslo</label>
+            <input asp-for="AktualneHeslo" class="form-control" />
+            <span asp-validation-for="AktualneHeslo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Nové heslo</label>
+            <input asp-for="NoveHeslo" class="form-control" />
+            <span asp-validation-for="NoveHeslo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Potvrdiť nové heslo</label>
+            <input asp-for="PotvrditNoveHeslo" class="form-control" />
+            <span asp-validation-for="PotvrditNoveHeslo" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary rounded-pill mt-3 px-4">💾 Uložiť zmeny</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

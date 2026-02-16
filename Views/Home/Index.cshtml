@@ -2,7 +2,245 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<header class="flex-shrink-0">
+    <div class="hero-section position-relative text-center text-white" style="height: 100vh; overflow: hidden;">
+        <img src="~/images/hero_image.jpg"
+             alt="Hero"
+             class="position-absolute top-0 start-0 w-100 h-100"
+             style="object-fit: cover; object-position: center; z-index: 0;" />
+
+        <div class="position-absolute top-50 start-50 translate-middle z-1">
+            <h1 class="fw-bold display-4">Vitajte v aplikácii na evidenciu študentov</h1>
+            <p class="lead">Spravujte používateľov, predmety a viac jednoducho a efektívne.</p>
+        </div>
+
+        <div style="height: 100vh;"></div>
+    </div>
+</header>
+
+<div class="container my-5">
+    <!-- Sekcia s pozadím a okrajmi -->
+    <div class="p-5 bg-light rounded-3 shadow-sm">
+        <h2 class="fw-bold mb-4 text-center">Možnosť sťahnutia údajov</h2>
+        <p class="text-muted mb-5 text-center">
+            Naša webová aplikácia poskytuje prístup k údajom prostredníctvom RESTful API, ktoré vracia dáta vo formáte JSON.
+            Vývojári môžu tieto údaje jednoducho integrovať do svojich mobilných alebo webových aplikácií.
+        </p>
+
+        <!-- Karty s návodom na prístup k API -->
+        <div class="row g-4">
+            <!-- Karta: Prehliadač -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold mb-3">
+                            <i class="bi bi-globe2 text-primary"></i> Prístup cez prehliadač
+                        </h5>
+                        <p class="card-text">
+                            Zadajte do prehliadača adresu
+                            <code>https://tvoja-domena/api/UsersApi</code> a zobrazia sa vám údaje
+                            vo formáte JSON.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Karta: Postman -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold mb-3">
+                            <i class="bi bi-envelope-paper text-warning"></i> Použitie Postmanu
+                        </h5>
+                        <p class="card-text">
+                            Vytvorte novú GET požiadavku s URL
+                            <code>https://tvoja-domena/api/UsersApi</code> a kliknite na "Send".
+                            Odpoveďou bude JSON so zoznamom používateľov.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Karta: cURL -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold mb-3">
+                            <i class="bi bi-terminal-fill text-success"></i> Použitie cURL
+                        </h5>
+                        <p class="card-text">
+                            Spustite príkaz:
+                        </p>
+                        <pre class="bg-white p-3 rounded">
+curl -X GET https://tvoja-domena/api/UsersApi
+            </pre>
+                        <p class="card-text">
+                            a zobrazia sa vám údaje vo formáte JSON.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Doplňujúca poznámka alebo kontakt -->
+        <div class="mt-5 text-center">
+            <p class="text-muted">
+                Pre podrobnejšie informácie alebo podporu pri integrácii API nás neváhajte kontaktovať.
+            </p>
+        </div>
+    </div>
 </div>
+
+<div class="container my-5">
+    <div class="card shadow-sm p-4 border-0">
+        <div class="card-body">
+            <!-- Hlavička: Fotka, meno a hviezdičky -->
+            <div class="d-flex align-items-center mb-3">
+                <!-- Fotka avatara – uprav cestu k obrázku podľa potreby -->
+                <img src="~/images/nahodny_obcan_slovenskej_republiky.png" alt="Obyčnajný občan" class="rounded-circle me-3" style="width:90px; height:90px;">
+                <div>
+                    <h5 class="fw-bold mb-0">Obyčajný občan</h5>
+                    <!-- Hviezdičkové hodnotenie: 4 z 5 -->
+                    <div class="text-warning">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- Text recenzie -->
+            <p class="text-muted">
+                Musím povedať, že som bol príjemne prekvapený. Z malého štátneho rozpočtu dokázali vytvoriť stránku, ktorá má zmysel.
+            </p>
+            <p class="text-muted">
+                Jasný a prehľadný dizajn, jednoduché ovládanie a maximálne využitie financií dokazujú, že aj s obmedzeným rozpočtom je možné dosiahnuť skvelé výsledky. Takto efektívne využité verejné prostriedky by som určite odporučil aj pre budúce projekty. Gratulujem tvorcovi investícia sa naozaj vyplatila. 😉
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="card shadow-sm p-4 border-0">
+        <div class="card-body">
+            <!-- Hlavička: Fotka, meno a hviezdičky -->
+            <div class="d-flex align-items-center mb-3">
+                <!-- Fotka avatara – uprav cestu k obrázku podľa potreby -->
+                <img src="~/images/greta.png" alt="Alena Ironická" class="rounded-circle me-3" style="width:90px; height:90px;">
+                <div>
+                    <h5 class="fw-bold mb-0">Alena Ironická</h5>
+                    <!-- Hviezdičkové hodnotenie: 5 z 5 -->
+                    <div class="text-warning">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- Text recenzie -->
+            <p class="text-muted">
+                „Aplikácia je ako digitálny zázrak s dávkou sarkazmu – každé kliknutie mi pripomína, že aj s minimálnym úsilím možno vytvoriť niečo, čo vás prekvapí. Je to kombinácia inteligencie a absurdity, ktorá dodáva každej funkcii nečakaný šmrnc. Určite odporúčam, ak máte radi dobrý humor a netradičné riešenia! 😎“
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="container my-5">
+    <div class="card shadow-sm p-4 border-0">
+        <div class="card-body">
+            <!-- Hlavička: Fotka, meno a hviezdičky -->
+            <div class="d-flex align-items-center mb-3">
+                <!-- Fotka avatara – uprav cestu k obrázku podľa potreby -->
+                <img src="~/images/cinky.png" alt="Peter Cynik" class="rounded-circle me-3" style="width:90px; height:90px;">
+                <div>
+                    <h5 class="fw-bold mb-0">Peter Cynik</h5>
+                    <!-- Hviezdičkové hodnotenie: 4 z 5 -->
+                    <div class="text-warning">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- Text recenzie -->
+            <p class="text-muted">
+                „Musím uznať, že aplikácia ma prekvapila 😮. Každý klik mi pripomína, že technológia sa vyvinula do takej miery, že už sa nemusíme báť absurdít – stačí sa trochu zasmiať 😄. Inovácie tu síce nie sú revolučné, ale s trochou cynizmu to funguje celkom dobre 😉.“
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+    /* Kontajner pre karty – využíva flexbox pre rozloženie */
+    .rating-cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        margin: 2rem 0;
+    }
+
+    /* Štýl pre jednotlivú hodnotiacu kartu */
+    .rating-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        width: 300px;
+        transition: transform 0.3s ease;
+    }
+
+        .rating-card:hover {
+            transform: translateY(-3px);
+        }
+
+    /* Hlavička karty obsahujúca avatár a informácie o používateľovi */
+    .rating-card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .rating-card-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 0.75rem;
+    }
+
+    /* Informácie o používateľovi (meno a hodnotenie) */
+    .rating-card-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .rating-card-name {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .rating-card-rating span {
+        color: #f1c40f; /* žltá farba pre hviezdičky */
+        font-size: 1rem;
+    }
+
+    /* Komentár používateľa */
+    .rating-card-comment {
+        font-size: 0.95rem;
+        color: #555;
+        margin: 0.5rem 0 0 0;
+    }
+
+</style>

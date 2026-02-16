@@ -1,0 +1,74 @@
+﻿@model EvidenciaStudentov.ViewModels.UcitelProfilViewModel
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<div class="container py-5">
+    <h1 class="fw-bold text-center mb-5">👩‍🏫 Profil učiteľa</h1>
+
+    <div class="row mb-4">
+        <!-- Karta profilu vľavo hore -->
+        <div class="card col-md-3 mb-4 shadow-sm border-0 rounded-4">
+            <div class="card-body text-center">
+                <h5 class="card-title mb-2">👩🏻‍🏫@Model.Meno @Model.Priezvisko</h5>
+                <p class="card-text mb-1"> @Model.Email</p>
+                <p class="card-text mb-3"> @Model.DatumNarodenia.ToString("dd.MM.yyyy")</p>
+                <a href="@Url.Action("ChangePassword", "Account")" class="custom-toggle-btn rounded-pill px-4 py-2">Zmeniť heslo</a>
+            </div>
+        </div>
+
+        <!-- Štatistiky na strede -->
+        <div class="col-lg-9">
+            <div class="row text-center">
+                <div class="col-md-3 mb-4">
+                    <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                        
+                        <div class="display-4">🎓</div>
+                        <h2 class="fw-bold">@Model.PocetStudentov</h2>
+                        <p class="text-muted mb-0">Moji študenti</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                        <div class="display-4">📚</div>
+                        <h2 class="fw-bold">@Model.PocetPredmetov</h2>
+                        <p class="text-muted mb-0">Moje predmety</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                        <div class="display-4">🖋️</div>
+                        <h2 class="fw-bold">@Model.PocetZnamok</h2>
+                        <p class="text-muted mb-0">Počet známok</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                        <div class="display-4">🕒</div>
+                        <h2 class="fw-bold">@Model.PocetDochadzok</h2>
+                        <p class="text-muted mb-0">Počet dochádzok</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sekcia predmetov -->
+    <h3 class="fw-bold mt-5">📘 Zoznam predmetov</h3>
+    <div class="row mt-3">
+        @foreach (var predmet in Model.Predmety)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-0 rounded-4 p-3">
+                    <h5 class="fw-semibold">📖 @predmet.Nazov</h5>
+                    <p class="text-muted">@predmet.Popis</p>
+                    <p><strong>👨‍🎓 Študenti:</strong> @predmet.PocetZakov</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

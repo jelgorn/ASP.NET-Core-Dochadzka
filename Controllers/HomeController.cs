@@ -1,4 +1,4 @@
-using ASP_NET_Bakalarka.Models;
+﻿using ASP_NET_Bakalarka.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -30,3 +30,4 @@ namespace ASP_NET_Bakalarka.Controllers
         }
     }
 }
+

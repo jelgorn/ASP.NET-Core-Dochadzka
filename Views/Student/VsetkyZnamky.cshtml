@@ -1,0 +1,68 @@
+﻿@model IEnumerable<EvidenciaStudentov.ViewModels.PredmetZnamkyViewModel>
+
+<!-- Bootstrap CSS -->
+
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold display-5 text-dark">✍️ Moje Známky</h1>
+        <p class="text-muted fs-5">Prehľad vašich výsledkov podľa predmetov.</p>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var predmet in Model)
+            {
+                var colorClass = predmet.Priemer >= 4.5 ? "border-danger"
+                : predmet.Priemer >= 3.0 ? "border-warning"
+                : "border-success";
+
+                <div class="col">
+                    <div class="card border-0 shadow h-100" style="border: 3px dashed #17a2b8; border-radius: 15px;">
+                        <div class="card-header text-center @colorClass" style="border-radius: 12px 12px 0 0; background-color: rgba(23, 162, 184, 0.1);">
+                            <h5 class="fw-bold mb-0">@predmet.Nazov</h5>
+                            <small>Priemer: @predmet.Priemer.ToString("0.00")</small>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                            <div class="d-flex flex-wrap gap-3 justify-content-center">
+                                @foreach (var znamka in predmet.Znamky)
+                                {
+                                    <span class="px-3 py-2 bg-light text-dark rounded shadow-sm">@znamka.Hodnota</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-footer text-center bg-light">
+                            <small class="text-muted">Celkový počet známok: @predmet.Znamky.Count</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            Žiadne známky na zobrazenie.
+        </div>
+    }
+</div>
+
+<style>
+    .card-header {
+        font-size: 1.25rem;
+        padding: 1rem;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .card-body span {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    .card-footer {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+</style>
+

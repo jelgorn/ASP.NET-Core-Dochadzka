@@ -1,0 +1,61 @@
+﻿@model IEnumerable<EvidenciaStudentov.Models.Pouzivatel>
+
+@{
+    ViewBag.Title = "Prehľad Štatistík";
+    var totalUsers = Model.Count();
+    var adminCount = Model.Count(u => u.Rola.ToLower() == "admin");
+    var teacherCount = Model.Count(u => u.Rola.ToLower() == "ucitel");
+    var studentCount = Model.Count(u => u.Rola.ToLower() == "ziak");
+    var subjectsCount = ViewBag.PocetPredmetov;
+}
+
+<div class="text-center mb-5 mt-5">
+    <h1 class="fw-bold display-5">Administratívny panel ⚙️</h1>
+    <p class="text-muted fs-5">Prehľad dôležitých štatistík a nástrojov systému.</p>
+</div>
+    <div class="row text-center justify-content-center mb-5">
+        <div class="col-md-2 col-sm-4 mb-4">
+        <div class="card py-3 shadow-sm border-0 rounded-4">
+                <div class="icon display-3">👥</div>
+                <div class="number display-4 fw-bold">@totalUsers</div>
+                <div class="title fs-5 text-muted">Používatelia</div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4 mb-4">
+        <div class="card py-3 shadow-sm border-0 rounded-4">
+                <div class="icon display-3">🛠️</div>
+                <div class="number display-4 fw-bold">@adminCount</div>
+                <div class="title fs-5 text-muted">Adminovia</div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4 mb-4">
+        <div class="card py-3 shadow-sm border-0 rounded-4">
+                <div class="icon display-3">👩‍🏫</div>
+                <div class="number display-4 fw-bold">@teacherCount</div>
+                <div class="title fs-5 text-muted">Učitelia</div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4 mb-4">
+        <div class="card py-3 shadow-sm border-0 rounded-4">
+                <div class="icon display-3">🎓</div>
+                <div class="number display-4 fw-bold">@studentCount</div>
+                <div class="title fs-5 text-muted">Žiaci</div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4 mb-4">
+        <div class="card py-3 shadow-sm border-0 rounded-4">
+                <div class="icon display-3">📚</div>
+                <div class="number display-4 fw-bold">@subjectsCount</div>
+                <div class="title fs-5 text-muted">Predmety</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mb-5">
+    <a href="/Admin/ExportUsersToCSV" class="custom-toggle-btn btn-lg me-2 shadow">
+            📥 Exportovať CSV
+        </a>
+    <a href="/Admin/CreateDatabaseBackup" class="custom-toggle-btn btn-lg shadow">
+            💾 Zálohovať databázu
+        </a>
+    </div>

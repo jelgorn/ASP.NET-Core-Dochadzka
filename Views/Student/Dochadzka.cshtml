@@ -1,0 +1,86 @@
+﻿@using EvidenciaStudentov.ViewModels
+@model IEnumerable<DochadzkaViewModel>
+
+@{
+    ViewBag.Title = "Prehľad Dochádzky";
+    // Zoskupenie záznamov podľa predmetu
+    var groupedBySubject = Model
+        .GroupBy(z => z.Predmet)
+        .OrderBy(g => g.Key)
+        .ToList();
+    int tabIndex = 0;
+}
+
+<div class="container my-5">
+    <!-- Moderný nadpis -->
+    <div class="text-center mb-5">
+        <h1 class="fw-bold display-5 text-dark">🗓️ Prehľad Dochádzky</h1>
+        <p class="text-muted fs-5">Zobrazenie vašej účasti podľa jednotlivých predmetov</p>
+    </div>
+
+    <!-- Navigačné tabu pre kategórie -->
+    <ul class="nav nav-tabs mb-4" id="dochadzkaTab" role="tablist">
+        @foreach (var subjectGroup in groupedBySubject)
+        {
+            var activeClass = tabIndex == 0 ? "active" : "";
+            var safeId = "tab" + tabIndex; // Unikátne ID pre každý tab
+            <li class="nav-item" role="presentation">
+                <button class="nav-link @activeClass" id="@safeId-tab" data-bs-toggle="tab" data-bs-target="#@safeId" type="button" role="tab" aria-controls="@safeId" aria-selected="@(tabIndex == 0 ? "true" : "false")">
+                    📘 @subjectGroup.Key
+                </button>
+            </li>
+            tabIndex++;
+        }
+    </ul>
+
+    <!-- Obsah jednotlivých tabov -->
+    <div class="tab-content" id="dochadzkaTabContent">
+        @{
+            tabIndex = 0;
+        }
+        @foreach (var subjectGroup in groupedBySubject)
+        {
+            var activeClass = tabIndex == 0 ? "show active" : "";
+            var safeId = "tab" + tabIndex;
+            <div class="tab-pane fade @activeClass" id="@safeId" role="tabpanel" aria-labelledby="@safeId-tab">
+                <div class="row mt-4">
+                    @foreach (var zaznam in subjectGroup.OrderByDescending(z => z.Datum))
+                    {
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                            <div class="card h-100 border-0 shadow rounded-4">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h6 class="text-muted mb-1">Dátum</h6>
+                                        <p class="fw-medium mb-0">
+                                            <i class="me-2 text-primary"></i>
+                                            📅 @zaznam.Datum.ToString("dd.MM.yyyy")
+                                        </p>
+                                    </div>
+                                    <div>
+                                        @if (zaznam.JePritomny)
+                                        {
+                                            <div class="text-center">
+                                                <span class="badge bg-success rounded-pill px-4 py-2 fs-6 shadow-sm text-center">
+                                                    ✅ Prítomný
+                                                </span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="text-center">
+                                                <span class="badge bg-danger rounded-pill px-4 py-2 fs-6 shadow-sm">
+                                                    ❌ Neprítomný
+                                                </span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            tabIndex++;
+        }
+    </div>
+</div>
