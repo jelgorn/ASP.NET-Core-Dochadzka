@@ -1,12 +1,14 @@
 # EduApp – evidencia dochádzky a hodnotenia študentov
 
-Webová aplikácia vytvorená v **ASP.NET Core MVC** na správu študentov, predmetov, známok a dochádzky. Projekt vznikol ako praktická časť bakalárskej práce **„ASP.NET Core aplikácia na evidenciu prítomnosti a hodnotenia študentov“**.
+Webová aplikácia vytvorená v **ASP.NET Core MVC** na evidenciu dochádzky, správu predmetov a hodnotenie študentov. Projekt vznikol ako praktická časť bakalárskej práce **„ASP.NET Core aplikácia na evidenciu prítomnosti a hodnotenia študentov“**.
 
-![Úvodná stránka EduApp](docs/screenshots/home.jpg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jelgorn/ASP.NET-Core-Dochadzka/main/docs/screenshots/home.webp" alt="Úvodná stránka EduApp" width="900">
+</p>
 
 ## O projekte
 
-EduApp je školský informačný systém s rozhraním prispôsobeným podľa používateľskej roly. Aplikácia rozdeľuje funkcionalitu medzi **administrátora**, **učiteľa** a **žiaka**, takže každý používateľ pracuje iba s údajmi a funkciami, ktoré potrebuje.
+EduApp je jednoduchý školský informačný systém s rozhraním prispôsobeným podľa používateľskej roly. Systém rozlišuje tri základné roly: **administrátor**, **učiteľ** a **žiak**. Každá rola má prístup len k funkciám a údajom, ktoré potrebuje.
 
 ### Administrátor
 
@@ -20,17 +22,17 @@ EduApp je školský informačný systém s rozhraním prispôsobeným podľa pou
 
 ### Učiteľ
 
-- osobný profil a štatistiky,
+- osobný profil a základné štatistiky,
 - prehľad vyučovaných predmetov,
 - zadávanie a úprava známok,
 - evidencia prítomnosti a neprítomnosti žiakov.
 
 ### Žiak
 
-- osobný profil so základnými štatistikami,
+- osobný profil,
 - prehľad predmetov a priemerov,
-- zobrazenie všetkých známok podľa predmetov,
-- prehľad dochádzky.
+- zobrazenie známok podľa predmetov,
+- prehľad vlastnej dochádzky.
 
 ## Použité technológie
 
@@ -40,30 +42,36 @@ EduApp je školský informačný systém s rozhraním prispôsobeným podľa pou
 | Dáta | Entity Framework Core, MySQL 8 |
 | Frontend | Razor Views, Bootstrap 5, Bootstrap Icons, vlastné CSS |
 | Autentifikácia | Cookie Authentication, role-based authorization |
-| Architektúra | MVC + oddelené vrstvy Application, Domain a Infrastructure |
-| Vývoj | Visual Studio / .NET CLI, EF Core migrations |
+| Architektúra | MVC + vrstvy Application, Domain a Infrastructure |
+| Vývoj | Visual Studio, .NET CLI, EF Core migrations |
 
-## Ukážky aplikácie
+## Ukážky systému
 
-Nasledujúce snímky pochádzajú z obrazovej prílohy bakalárskej práce a zachytávajú reálne rozhranie systému.
+Snímky nižšie pochádzajú priamo z obrazovej prílohy bakalárskej práce a zachytávajú reálne rozhranie aplikácie.
 
-### Administrátorské rozhranie
+### Administrátorský panel
 
-Administrátor má centrálny prehľad o používateľoch, učiteľoch, žiakoch a predmetoch a môže spravovať jednotlivé časti systému.
+Administrátor vidí základné štatistiky systému a má prístup k správe používateľov, predmetov a ich priradení.
 
-![Administratívny panel](docs/screenshots/admin-dashboard.jpg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jelgorn/ASP.NET-Core-Dochadzka/main/docs/screenshots/admin-dashboard.webp" alt="Administrátorský panel EduApp" width="1000">
+</p>
 
-### Učiteľské rozhranie
+### Evidencia dochádzky učiteľom
 
-Učiteľ pracuje s predmetmi, ktoré vyučuje, a môže evidovať známky aj prítomnosť alebo neprítomnosť žiakov.
+Učiteľ si vyberie predmet a môže pri jednotlivých žiakoch zaznamenať prítomnosť alebo neprítomnosť na konkrétny deň.
 
-![Evidencia dochádzky učiteľom](docs/screenshots/teacher-attendance.jpg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jelgorn/ASP.NET-Core-Dochadzka/main/docs/screenshots/teacher-attendance.webp" alt="Evidencia dochádzky učiteľom" width="1000">
+</p>
 
-### Žiacke rozhranie
+### Prehľad známok žiaka
 
-Žiak má prístup k vlastným výsledkom. Známky sú rozdelené podľa predmetov a systém zobrazuje aj vypočítané priemery.
+Žiak má známky rozdelené podľa predmetov. Pri každom predmete sa zobrazuje vypočítaný priemer a jednotlivé hodnotenia.
 
-![Prehľad známok žiaka](docs/screenshots/student-grades.jpg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jelgorn/ASP.NET-Core-Dochadzka/main/docs/screenshots/student-grades.webp" alt="Moje známky – žiacke rozhranie" width="1000">
+</p>
 
 ## Štruktúra projektu
 
@@ -77,7 +85,7 @@ ASP.NET-Core-Dochadzka/
 ├── Shared/            # spoločné filtre a pomocné komponenty
 ├── ViewModels/        # modely pre používateľské rozhranie
 ├── Views/             # Razor Views
-└── Program.cs         # konfigurácia aplikácie a DI
+└── Program.cs         # konfigurácia aplikácie a dependency injection
 ```
 
 ## Lokálne spustenie
@@ -96,9 +104,7 @@ cd ASP.NET-Core-Dochadzka
 
 ### 2. Nastavenie databázy
 
-Vytvor MySQL databázu a nastav vlastný connection string `DefaultConnection`. Pre lokálny vývoj je vhodné nepoužívať produkčné prihlasovacie údaje priamo v repozitári.
-
-Príklad:
+Vytvor MySQL databázu a nastav connection string `DefaultConnection` pre svoje lokálne prostredie.
 
 ```json
 {
@@ -124,11 +130,11 @@ Pri štarte aplikácia aplikuje dostupné **EF Core migrations** a vytvorí demo
 | Admin | `admin@demo.sk` | `Admin123!` |
 | Žiak | `user@demo.sk` | `User123!` |
 
-> Demo účty sú určené iba na lokálne/testovacie použitie.
+> Demo účty sú určené iba na lokálne a testovacie použitie.
 
 ## Kontext projektu
 
-Projekt bol vytvorený v roku **2025** ako praktická časť bakalárskej práce na Pedagogickej fakulte Katolíckej univerzity v Ružomberku. Cieľom bolo navrhnúť a implementovať prehľadnú webovú aplikáciu pre evidenciu prítomnosti a hodnotenia študentov s viacúrovňovým používateľským rozhraním.
+Projekt bol vytvorený v roku **2025** ako praktická časť bakalárskej práce na Pedagogickej fakulte Katolíckej univerzity v Ružomberku. Cieľom bolo navrhnúť a implementovať prehľadnú webovú aplikáciu na evidenciu prítomnosti a hodnotenia študentov s oddelenými rozhraniami pre administrátora, učiteľa a žiaka.
 
 ---
 
