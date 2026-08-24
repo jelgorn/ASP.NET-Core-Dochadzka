@@ -57,14 +57,6 @@ Administrátor vidí základné štatistiky systému a má prístup k správe po
   <img src="https://raw.githubusercontent.com/jelgorn/ASP.NET-Core-Dochadzka/main/docs/screenshots/admin-dashboard.webp" alt="Administrátorský panel EduApp" width="1000">
 </p>
 
-### Evidencia dochádzky učiteľom
-
-Učiteľ si vyberie predmet a môže pri jednotlivých žiakoch zaznamenať prítomnosť alebo neprítomnosť na konkrétny deň.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/jelgorn/ASP.NET-Core-Dochadzka/main/docs/screenshots/teacher-attendance.webp" alt="Evidencia dochádzky učiteľom" width="1000">
-</p>
-
 ### Prehľad známok žiaka
 
 Žiak má známky rozdelené podľa predmetov. Pri každom predmete sa zobrazuje vypočítaný priemer a jednotlivé hodnotenia.
